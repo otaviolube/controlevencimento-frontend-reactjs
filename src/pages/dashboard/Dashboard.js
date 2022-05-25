@@ -5,7 +5,8 @@ import {
   Select,
   OutlinedInput,
   MenuItem,
-  Button
+  Button,
+  Menu
 } from "@material-ui/core";
 import { useTheme } from "@material-ui/styles";
 import {
@@ -24,6 +25,10 @@ import {
 
 // styles
 import useStyles from "./styles";
+
+import * as Icons from "@material-ui/icons";
+
+import VerifyToken from "../../components/VerifyToken";
 
 // components
 import mock from "./mock";
@@ -46,18 +51,46 @@ export default function Dashboard(props) {
   var classes = useStyles();
   var theme = useTheme();
 
+  const [anchorEl, setAnchorEl] = React.useState(null)
+
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
   // local
   var [mainChartState, setMainChartState] = useState("monthly");
 
   return (
     <>
-      <PageTitle title="Dashboard" button={<Button
-      variant="contained"
-      size="medium"
-      color="secondary"
-    >
-        Latest Reports
-    </Button>} />
+      <VerifyToken props={props} />
+      
+      <PageTitle title="Empresas" button={(
+        <>
+          <Button
+            variant="contained"
+            size="medium"
+            color="secondary"
+            onClick={e => handleClick(e)}
+          >
+            Relatórios
+          </Button>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClose}><Icons.Assessment style={{ marginRight: 16 }} /> Relatório 1</MenuItem>
+            <MenuItem onClick={handleClose}><Icons.Assessment style={{ marginRight: 16 }} /> Relatório 2</MenuItem>
+          </Menu>
+        </>
+      )} />
+
       <Grid container spacing={4}>
         <Grid item lg={3} md={4} sm={6} xs={12}>
           <Widget
@@ -69,30 +102,30 @@ export default function Dashboard(props) {
             <div className={classes.visitsNumberContainer}>
               <Grid container item alignItems={"center"}>
                 <Grid item xs={6}>
-              <Typography size="xl" weight="medium" noWrap>
-                12, 678
-              </Typography>
+                  <Typography size="xl" weight="medium" noWrap>
+                    12, 678
+                  </Typography>
                 </Grid>
                 <Grid item xs={6}>
-              <LineChart
-                width={100}
-                height={30}
-                data={[
-                  { value: 10 },
-                  { value: 15 },
-                  { value: 10 },
-                  { value: 17 },
-                  { value: 18 },
-                ]}
-              >
-                <Line
-                  type="natural"
-                  dataKey="value"
-                  stroke={theme.palette.success.main}
-                  strokeWidth={2}
-                  dot={false}
-                />
-              </LineChart>
+                  <LineChart
+                    width={100}
+                    height={30}
+                    data={[
+                      { value: 10 },
+                      { value: 15 },
+                      { value: 10 },
+                      { value: 17 },
+                      { value: 18 },
+                    ]}
+                  >
+                    <Line
+                      type="natural"
+                      dataKey="value"
+                      stroke={theme.palette.success.main}
+                      strokeWidth={2}
+                      dot={false}
+                    />
+                  </LineChart>
                 </Grid>
               </Grid>
             </div>

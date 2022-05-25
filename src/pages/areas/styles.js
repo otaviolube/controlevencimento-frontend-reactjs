@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/styles";
-import banner_compet from "../../images/compet_banner_1.png";
 
 export default makeStyles(theme => ({
   container: {
@@ -11,34 +10,6 @@ export default makeStyles(theme => ({
     position: "absolute",
     top: 0,
     left: 0,
-  },
-  logotypeContainer: {
-    backgroundImage: `url(${banner_compet})`,
-    backgroundSize: "cover",
-    width: "60%",
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    [theme.breakpoints.down("md")]: {
-      width: "50%",
-    },
-    [theme.breakpoints.down("md")]: {
-      display: "none",
-    },
-  },
-  logotypeImage: {
-    height: 165,
-    marginBottom: theme.spacing(4),
-  },
-  logotypeText: {
-    color: "white",
-    fontWeight: 500,
-    fontSize: 84,
-    [theme.breakpoints.down("md")]: {
-      fontSize: 48,
-    },
   },
   formContainer: {
     width: "40%",
@@ -124,6 +95,9 @@ export default makeStyles(theme => ({
   },
   textField: {
     borderBottomColor: theme.palette.background.light,
+  },
+  textFieldHidden: {
+    display: "none"
   },
   formButtons: {
     width: "100%",

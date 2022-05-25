@@ -1,0 +1,7 @@
+{
+    "name": "VerifyToken",
+    "version": "0.0.0",
+    "private": true,
+    "main": "VerifyToken.js"
+  }
+  

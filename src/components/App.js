@@ -7,13 +7,14 @@ import Layout from "./Layout";
 // pages
 import Error from "../pages/error";
 import Login from "../pages/login";
+import ForgetPassword from "../pages/forget_password";
 
 // context
 import { useUserState } from "../context/UserContext";
 
 export default function App() {
-  // global
-  var { isAuthenticated } = useUserState();
+
+  const { isAuthenticated } = useUserState();
 
   return (
     <HashRouter>
@@ -26,6 +27,7 @@ export default function App() {
         />
         <PrivateRoute path="/app" component={Layout} />
         <PublicRoute path="/login" component={Login} />
+        <PublicRoute path="/forget_password/:user/:token" component={ForgetPassword} />
         <Route component={Error} />
       </Switch>
     </HashRouter>
@@ -37,8 +39,8 @@ export default function App() {
     return (
       <Route
         {...rest}
-        render={props =>
-          isAuthenticated ? (
+        render={props => {
+          return isAuthenticated ? (
             React.createElement(component, props)
           ) : (
             <Redirect
@@ -50,6 +52,7 @@ export default function App() {
               }}
             />
           )
+        }
         }
       />
     );

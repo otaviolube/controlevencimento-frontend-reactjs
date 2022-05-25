@@ -7,7 +7,6 @@ import {
   Menu,
   MenuItem,
   Fab,
-  Link
 } from "@material-ui/core";
 import {
   Menu as MenuIcon,
@@ -18,13 +17,17 @@ import {
   Send as SendIcon,
   ArrowBack as ArrowBackIcon,
 } from "@material-ui/icons";
+
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
+import BuildIcon from '@mui/icons-material/Build';
+
 import classNames from "classnames";
 
 // styles
 import useStyles from "./styles";
 
 // components
-import { Badge, Typography, Button } from "../Wrappers";
+import { Badge, Typography } from "../Wrappers";
 import Notification from "../Notification/Notification";
 import UserAvatar from "../UserAvatar/UserAvatar";
 
@@ -34,7 +37,11 @@ import {
   useLayoutDispatch,
   toggleSidebar,
 } from "../../context/LayoutContext";
+
 import { useUserDispatch, signOut } from "../../context/UserContext";
+
+import jwt_decode from "jwt-decode";
+
 
 const messages = [
   {
@@ -90,20 +97,20 @@ const notifications = [
 ];
 
 export default function Header(props) {
-  var classes = useStyles();
+  const classes = useStyles();
 
-  // global
-  var layoutState = useLayoutState();
-  var layoutDispatch = useLayoutDispatch();
-  var userDispatch = useUserDispatch();
+  const layoutState = useLayoutState();
+  const layoutDispatch = useLayoutDispatch();
+  const userDispatch = useUserDispatch();
 
-  // local
-  var [mailMenu, setMailMenu] = useState(null);
-  var [isMailsUnread, setIsMailsUnread] = useState(true);
-  var [notificationsMenu, setNotificationsMenu] = useState(null);
-  var [isNotificationsUnread, setIsNotificationsUnread] = useState(true);
-  var [profileMenu, setProfileMenu] = useState(null);
-  var [isSearchOpen, setSearchOpen] = useState(false);
+  const userData = jwt_decode(localStorage.getItem("@compet-expiration-control"));
+
+  const [mailMenu, setMailMenu] = useState(null);
+  const [isMailsUnread, setIsMailsUnread] = useState(true);
+  const [notificationsMenu, setNotificationsMenu] = useState(null);
+  const [isNotificationsUnread, setIsNotificationsUnread] = useState(true);
+  const [profileMenu, setProfileMenu] = useState(null);
+  const [isSearchOpen, setSearchOpen] = useState(false);
 
   return (
     <AppBar position="fixed" className={classes.appBar}>
@@ -137,10 +144,9 @@ export default function Header(props) {
           )}
         </IconButton>
         <Typography variant="h6" weight="medium" className={classes.logotype}>
-          React Material Admin
+          Controle de Vencimentos
         </Typography>
         <div className={classes.grow} />
-        <Button component={Link} href="https://flatlogic.com/templates/react-material-admin-full" variant={"outlined"} color={"secondary"} className={classes.purchaseBtn}>Unlock full version</Button>
         <div
           className={classNames(classes.search, {
             [classes.searchFocused]: isSearchOpen,
@@ -155,7 +161,7 @@ export default function Header(props) {
             <SearchIcon classes={{ root: classes.headerIcon }} />
           </div>
           <InputBase
-            placeholder="Search…"
+            placeholder="Buscar..."
             classes={{
               root: classes.inputRoot,
               input: classes.inputInput,
@@ -217,14 +223,14 @@ export default function Header(props) {
         >
           <div className={classes.profileMenuUser}>
             <Typography variant="h4" weight="medium">
-              New Messages
+              Mensagens
             </Typography>
             <Typography
               className={classes.profileMenuLink}
               component="a"
               color="secondary"
             >
-              {messages.length} New Messages
+              {messages.length} Novas Mensagens
             </Typography>
           </div>
           {messages.map(message => (
@@ -289,15 +295,15 @@ export default function Header(props) {
         >
           <div className={classes.profileMenuUser}>
             <Typography variant="h4" weight="medium">
-              John Smith
+              { userData.user_name }
             </Typography>
             <Typography
               className={classes.profileMenuLink}
               component="a"
               color="primary"
-              href="https://flatlogic.com"
+              href={userData.user_email}
             >
-              Flalogic.com
+              {userData.user_email}
             </Typography>
           </div>
           <MenuItem
@@ -306,7 +312,7 @@ export default function Header(props) {
               classes.headerMenuItem,
             )}
           >
-            <AccountIcon className={classes.profileMenuIcon} /> Profile
+            <AccountIcon className={classes.profileMenuIcon} /> Perfil
           </MenuItem>
           <MenuItem
             className={classNames(
@@ -314,7 +320,7 @@ export default function Header(props) {
               classes.headerMenuItem,
             )}
           >
-            <AccountIcon className={classes.profileMenuIcon} /> Tasks
+            <HourglassEmptyIcon className={classes.profileMenuIcon} /> Vencimentos
           </MenuItem>
           <MenuItem
             className={classNames(
@@ -322,15 +328,15 @@ export default function Header(props) {
               classes.headerMenuItem,
             )}
           >
-            <AccountIcon className={classes.profileMenuIcon} /> Messages
+            <BuildIcon className={classes.profileMenuIcon} /> Configurações
           </MenuItem>
           <div className={classes.profileMenuUser}>
             <Typography
               className={classes.profileMenuLink}
               color="primary"
-              onClick={() => signOut(userDispatch, props.history)}
+              onClick={async () => await signOut(userDispatch, props.history)}
             >
-              Sign Out
+              Sair
             </Typography>
           </div>
         </Menu>

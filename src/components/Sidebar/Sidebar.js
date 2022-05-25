@@ -2,15 +2,20 @@ import React, { useState, useEffect } from "react";
 import { Drawer, IconButton, List } from "@material-ui/core";
 import {
   Home as HomeIcon,
-  NotificationsNone as NotificationsIcon,
-  FormatSize as TypographyIcon,
-  FilterNone as UIElementsIcon,
-  BorderAll as TableIcon,
-  QuestionAnswer as SupportIcon,
-  LibraryBooks as LibraryIcon,
-  HelpOutline as FAQIcon,
   ArrowBack as ArrowBackIcon,
+  HourglassEmptyTwoTone as HourglassEmptyTwoToneIcon,
+  Business as BusinessIcon,
+
 } from "@material-ui/icons";
+
+import EngineeringIcon from '@mui/icons-material/Engineering';
+import GroupIcon from '@mui/icons-material/Group';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import PushPinIcon from '@mui/icons-material/PushPin';
+import CategoryIcon from '@mui/icons-material/Category';
+import PeopleIcon from '@mui/icons-material/People';
+import ExtensionIcon from '@mui/icons-material/Extension';
+
 import { useTheme } from "@material-ui/styles";
 import { withRouter } from "react-router-dom";
 import classNames from "classnames";
@@ -20,7 +25,6 @@ import useStyles from "./styles";
 
 // components
 import SidebarLink from "./components/SidebarLink/SidebarLink";
-import Dot from "./components/Dot";
 
 // context
 import {
@@ -30,56 +34,66 @@ import {
 } from "../../context/LayoutContext";
 
 const structure = [
-  { id: 0, label: "Dashboard", link: "/app/dashboard", icon: <HomeIcon /> },
+  { 
+    id: 0, 
+    label: "Dashboard", 
+    link: "/app/dashboard", 
+    icon: <HomeIcon /> 
+  },
   {
     id: 1,
-    label: "Typography",
-    link: "/app/typography",
-    icon: <TypographyIcon />,
+    label: "Vencimentos",
+    link: "/app/expirations",
+    icon: <HourglassEmptyTwoToneIcon />
   },
-  { id: 2, label: "Tables", link: "/app/tables", icon: <TableIcon /> },
-  {
-    id: 3,
-    label: "Notifications",
-    link: "/app/notifications",
-    icon: <NotificationsIcon />,
+  { 
+    id: 2, 
+    label: "Empresas", 
+    link: "/app/companies", 
+    icon: <BusinessIcon /> 
+  },
+  { 
+    id: 3, 
+    label: "Clientes", 
+    link: "/app/clients", 
+    icon: <PeopleIcon /> 
   },
   {
     id: 4,
-    label: "UI Elements",
-    link: "/app/ui",
-    icon: <UIElementsIcon />,
-    children: [
-      { label: "Icons", link: "/app/ui/icons" },
-      { label: "Charts", link: "/app/ui/charts" },
-      { label: "Maps", link: "/app/ui/maps" },
-    ],
-  },
-  { id: 5, type: "divider" },
-  { id: 6, type: "title", label: "HELP" },
-  { id: 7, label: "Library", link: "https://flatlogic.com/templates", icon: <LibraryIcon /> },
-  { id: 8, label: "Support", link: "https://flatlogic.com/forum", icon: <SupportIcon /> },
-  { id: 9, label: "FAQ", link: "https://flatlogic.com/forum", icon: <FAQIcon /> },
-  { id: 10, type: "divider" },
-  { id: 11, type: "title", label: "PROJECTS" },
-  {
-    id: 12,
-    label: "My recent",
-    link: "",
-    icon: <Dot size="small" color="warning" />,
+    label: "Colaboradores",
+    link: "/app/colaborators",
+    icon: <EngineeringIcon />,
   },
   {
-    id: 13,
-    label: "Starred",
-    link: "",
-    icon: <Dot size="small" color="primary" />,
+    id: 5,
+    label: "Usuários",
+    link: "/app/users",
+    icon: <GroupIcon />,
   },
   {
-    id: 14,
-    label: "Background",
-    link: "",
-    icon: <Dot size="small" color="secondary" />,
+    id: 6,
+    label: "Contratos",
+    link: "/app/contracts",
+    icon: <ReceiptLongIcon />,
   },
+  {
+    id: 7,
+    label: "Áreas",
+    link: "/app/areas",
+    icon: <PushPinIcon />,
+  },
+  {
+    id: 8,
+    label: "Itens",
+    link: "/app/items",
+    icon: <CategoryIcon />,
+  },
+  {
+    id: 9,
+    label: "Subitens",
+    link: "/app/subitems",
+    icon: <ExtensionIcon />,
+  }
 ];
 
 function Sidebar({ location }) {
@@ -93,7 +107,7 @@ function Sidebar({ location }) {
   // local
   var [isPermanent, setPermanent] = useState(true);
 
-  useEffect(function() {
+  useEffect(function () {
     window.addEventListener("resize", handleWindowWidthChange);
     handleWindowWidthChange();
     return function cleanup() {

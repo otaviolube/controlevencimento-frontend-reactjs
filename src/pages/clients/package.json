@@ -1,0 +1,6 @@
+{
+    "name": "Clients",
+    "version": "0.0.0",
+    "main": "Clients.js",
+    "private": true
+  }

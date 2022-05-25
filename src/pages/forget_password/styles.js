@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/styles";
-import banner_compet from "../../images/compet_banner_1.png";
+import banner_compet from "../../images/compet_banner_3.jpg";
 
 export default makeStyles(theme => ({
   container: {

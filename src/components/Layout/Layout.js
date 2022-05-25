@@ -2,48 +2,49 @@ import React from "react";
 import {
   Route,
   Switch,
-  Redirect,
   withRouter,
 } from "react-router-dom";
 import classnames from "classnames";
 import {Box, IconButton, Link} from '@material-ui/core'
 import Icon from '@mdi/react'
 
-//icons
 import {
   mdiFacebook as FacebookIcon,
-  mdiTwitter as TwitterIcon,
-  mdiGithub as GithubIcon,
+  mdiLinkedin as LinkedinIcon
 } from '@mdi/js'
 
-// styles
 import useStyles from "./styles";
 
-// components
 import Header from "../Header";
 import Sidebar from "../Sidebar";
 
-// pages
 import Dashboard from "../../pages/dashboard";
-import Typography from "../../pages/typography";
-import Notifications from "../../pages/notifications";
-import Maps from "../../pages/maps";
-import Tables from "../../pages/tables";
-import Icons from "../../pages/icons";
-import Charts from "../../pages/charts";
+import Expirations from "../../pages/expirations";
+import Companies from "../../pages/companies";
+import Clients from "../../pages/clients";
+import Colaborators from "../../pages/colaborators";
+import Users from "../../pages/users";
+import Contracts from "../../pages/contracts";
+import Areas from "../../pages/areas";
+import Items from "../../pages/items";
+import Subitems from "../../pages/subitems";
 
-// context
 import { useLayoutState } from "../../context/LayoutContext";
 
+import VerifyToken from "../../components/VerifyToken";
+
 function Layout(props) {
-  var classes = useStyles();
+  
+  const classes = useStyles();
 
-  // global
-  var layoutState = useLayoutState();
-
+  const layoutState = useLayoutState();
+  
   return (
     <div className={classes.root}>
         <>
+
+          <VerifyToken props={props} />
+          
           <Header history={props.history} />
           <Sidebar />
           <div
@@ -53,18 +54,16 @@ function Layout(props) {
           >
             <div className={classes.fakeToolbar} />
             <Switch>
-              <Route path="/app/dashboard" component={Dashboard} />
-              <Route path="/app/typography" component={Typography} />
-              <Route path="/app/tables" component={Tables} />
-              <Route path="/app/notifications" component={Notifications} />
-              <Route
-                exact
-                path="/app/ui"
-                render={() => <Redirect to="/app/ui/icons" />}
-              />
-              <Route path="/app/ui/maps" component={Maps} />
-              <Route path="/app/ui/icons" component={Icons} />
-              <Route path="/app/ui/charts" component={Charts} />
+              <Route path="/app/dashboard" component={Dashboard}/>
+              <Route path="/app/expirations" component={Expirations} />
+              <Route path="/app/companies" component={Companies} />
+              <Route path="/app/clients" component={Clients} />
+              <Route path="/app/colaborators" component={Colaborators} />
+              <Route path="/app/users" component={Users} />
+              <Route path="/app/contracts" component={Contracts} />
+              <Route path="/app/areas" component={Areas} />
+              <Route path="/app/items" component={Items} />
+              <Route path="/app/subitems" component={Subitems} />
             </Switch>
             <Box
               mt={5}
@@ -76,32 +75,16 @@ function Layout(props) {
               <div>
                 <Link
                   color={'primary'}
-                  href={'https://flatlogic.com/'}
+                  href={'https://www.competengenharia.com.br/'}
                   target={'_blank'}
                   className={classes.link}
                 >
-                  Flatlogic
-                </Link>
-                <Link
-                  color={'primary'}
-                  href={'https://flatlogic.com/about'}
-                  target={'_blank'}
-                  className={classes.link}
-                >
-                  About Us
-                </Link>
-                <Link
-                  color={'primary'}
-                  href={'https://flatlogic.com/blog'}
-                  target={'_blank'}
-                  className={classes.link}
-                >
-                  Blog
+                  Compet Engenharia
                 </Link>
               </div>
               <div>
                 <Link
-                  href={'https://www.facebook.com/flatlogic'}
+                  href={'https://www.facebook.com/CompetEngenharia/'}
                   target={'_blank'}
                 >
                   <IconButton aria-label="facebook">
@@ -113,27 +96,12 @@ function Layout(props) {
                   </IconButton>
                 </Link>
                 <Link
-                  href={'https://twitter.com/flatlogic'}
+                  href={'https://www.linkedin.com/company/competengenharia/'}
                   target={'_blank'}
                 >
-                  <IconButton aria-label="twitter">
+                  <IconButton aria-label="linkedin">
                     <Icon
-                      path={TwitterIcon}
-                      size={1}
-                      color="#6E6E6E99"
-                    />
-                  </IconButton>
-                </Link>
-                <Link
-                  href={'https://github.com/flatlogic'}
-                  target={'_blank'}
-                >
-                  <IconButton
-                    aria-label="github"
-                    style={{marginRight: -12}}
-                  >
-                    <Icon
-                      path={GithubIcon}
+                      path={LinkedinIcon}
                       size={1}
                       color="#6E6E6E99"
                     />
